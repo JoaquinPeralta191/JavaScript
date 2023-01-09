@@ -6,14 +6,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="icon" href="./assets/images/Icono_1.png">
+    <script src="https://kit.fontawesome.com/2c95d10380.js" crossorigin="anonymous"></script>
     <title>Nelly's Bakery</title>
 </head>
 <body>
-    <header class="position-sticky">
+    <header class="cabecera">
       <div class="icono bg-light">
         <a href="#"><img src="./assets/images/Icono_1.png" width="100rem" height="100rem" alt="Icono"></a>
       </div> 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light cabecera"> 
           <div class="container-fluid">
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -27,7 +28,7 @@
                     <a class="nav-link" href="./pages/nosotros.html">Sobre Nosotros</a>
                   </li>
                   <li class="nav-item active navegacion">
-                    <a class="nav-link" aria-current="page" href="./pages/productos.html">Productos</a>
+                    <a class="nav-link" href="./pages/productos.html">Productos</a>
                   </li>
                   <li class="nav-item active navegacion">
                     <a class="nav-link" href="./pages/carrito.html">Pedido</a>
@@ -37,10 +38,69 @@
         </nav>
     </header>
     <main>
-
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner fondo">
+          <div class="carousel-item active">
+            <img src="./assets/images/Torta_1.jpg" class="d-block mx-auto img-fluid" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="./assets/images/alfajores.jpg" class="d-block mx-auto img-fluid" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="./assets/images/tortalimon.jpg" class="d-block mx-auto img-fluid" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <br>
+     <h1>Nelly's Bakery</h1> 
+      <p>Te damos la bienvenida a la tienda oficial de la pasteleria, aquí podras encontrar el catalogo de los productos que ofrecemos, sus precios y, ademas, podras realizar tu pedido.</p>
+      <div class="cards">
+        <div class="card cartas">
+          <a href="./pages/nosotros.html">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Nosotros somos un emprendimiento  con el que...</p>
+            </div>
+          </a>
+        </div>
+        <div class="card cartas">
+          <a href="./pages/productos.html">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Aqui podras ver el catalogo de todos nuestros productos</p>
+            </div>
+          </a>
+        </div>
+        <div class="card cartas">
+          <a href="./pages/carrito.html">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Aqui podras ver tu pedido y pagarlo</p>
+          </a>
+            </div>
+        </div>
+      </div>
     </main>
-    <footer>
-
+    <footer class="pieDePagina">
+      <ul class="nav justify-content-center">
+        <li class="nav-item iconos">
+          <a class="nav-link" href="https://es-la.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        </li>
+        <li class="nav-item iconos">
+          <a class="nav-link" href="https://www.instagram.com/nellysbakery_/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        </li>
+        <li class="nav-item iconos">
+          <a class="nav-link" href="https://wa.link/9phdaz" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </li>
+      </ul>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="./js/index.js"></script>
