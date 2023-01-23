@@ -1,119 +1,195 @@
-//functions para el menú:
-function agregarProducto(){
-    let productoIngresado = prompt("Ingrese el nombre del postre")
-    let clasificacionIngresada = prompt("Ingrese el tipo de postre")
-    let precioIngresado = parseInt (prompt("Ingrese el precio del postre"))
-    while (isNaN(precioIngresado)){
-   precioIngresado = prompt("Atencion ingrese un numero, tipo dato anterior incorrecto. Ingrese el precio del postre") 
-    }
-    mostrarDatosproducto(productoIngresado, clasificacionIngresada, precioIngresado)
- }
- function mostrarDatosproducto(nombre, tipo, precio){
-    console.log(`El postre es ${nombre}, se clasifica como ${tipo} y vale ${precio}`)
- }
- // CÓDIGO AFTER 
- let salirMenu = false
- console.log(salirMenu)
- do{
-    let opcionIngresada = parseInt(prompt(`Ingrese la opción deseada
-    1 - Agregar postre
-    2 - Reiniciar consola
-    3 - Consultar catálogo
-    4 - Comprar
-    0 - Salir del menu`))
-    switch(opcionIngresada){
+class Producto {
+   constructor(id, nombre, tipo, precio){
+       this.id = id,
+       this.nombre = nombre,
+       this.tipo = tipo,
+       this.precio = precio
+   }
+   //métodos
+   mostrarInfoLibro(){
+       console.log(`El articulo es ${this.nombre}, se clasifica como ${this.tipo} y su precio es ${this.precio}`)
+   }
+}
+
+const producto1 = new Producto(1,"Chesecake","Torta", 1900)
+
+const producto2 = new Producto(2,"Chocotorta","Torta", 2100)
+
+const producto3 = new Producto(3,"Galletas con chips de chocolate", "Galletas", 1200)
+
+const producto4 = new Producto(4,"Alfajores con almendras","Alfajores", 2000)
+
+const producto5 = new Producto(5,"Tarta de limon", "Tarta", 1600)
+
+const producto6 = new Producto(6, "Budin glaseados", "Budin", 1400)
+
+const mostrador = [producto1, producto2, producto3, producto4, producto5, producto6]
+
+function agregarPostre(){
+  let nombreIngresado = prompt("Ingrese el nombre del producto")
+  let clasificacionIngresada = prompt("Ingrese la clasificacion del producto")
+  let precioIngresado = parseInt(prompt("Ingrese el precio del producto"))
+
+  const nuevoProducto = new Producto(mostrador.length+1, nombreIngresado, clasificacionIngresada, precioIngresado)
+  console.log(nuevoProducto)
+  mostrador.push(nuevoProducto)
+  console.log(mostrador) 
+}
+
+function eliminarProducto(array){
+   console.log("A partir del catalogo ingrese el id del producto que desea eliminar")
+   for(let elem of array){
+       console.log(`${elem.id} - ${elem.nombre}`)
+   }
+   let idEliminar = parseInt(prompt("Ingrese el id a eliminar"))
+
+   let arrayID = array.map(book => book.id)
+   console.log(arrayID)
+
+   let indice = arrayID.indexOf(idEliminar)
+
+   array.splice(indice, 1)
+   mostrarCatalogoForEach(array)
+}
+
+function mostrarCatalogo(array){
+   console.log(`Nuestro catalogo es:`)
+   for(let producto of array){
+       
+       console.log(producto.nombre, producto.precio)
+   }
+}
+
+function mostrarCatalogoForEach(array){
+   console.log(`Productos disponibles: `)
+   array.forEach(
+       (producto)=>{
+           console.log(producto.id, producto.nombre, producto.tipo, producto.precio)
+       }
+   )
+}
+
+function buscarPorNombre(arr){
+   let nombreBuscado = prompt("Ingrese el nombre del producto que desea buscar")
+   let nombreEncontrado = arr.find(
+       (producto)=>producto.nombre.toLowerCase() == nombreBuscado.toLowerCase()
+       )
+   if(nombreEncontrado == undefined){
+       console.log(`El producto ${nombreBuscado} no está en stock`)
+   }else{
+       console.log(nombreEncontrado)
+   }    
+
+}
+
+function buscarPorTipo(array){
+   let tipoBuscado = prompt("Ingrese el tipo de producto que está buscando")
+   let busqueda = array.filter(
+       (producto)=> producto.tipo.toLowerCase() == tipoBuscado.toLowerCase()
+   )
+   if(busqueda.length == 0){
+       console.log(`No se encuentran ${tipoBuscado} en nuestro catalogo`)
+   }else{
+       mostrarCatalogoForEach(busqueda)
+   }
+}
+
+function ordenarMenorMayor(array){
+
+   const menorMayor = [].concat(array)
+   
+   menorMayor.sort((par1, par2)=> par1.precio - par2.precio)
+   mostrarCatalogoForEach(menorMayor)
+}
+
+function ordenarMayorMenor(array){
+   const mayorMenor = [].concat(array)
+
+   mayorMenor.sort((a,b)=> b.precio - a.precio)
+   mostrarCatalogoForEach(mayorMenor)
+}
+function ordenarAlfabeticamenteNombre(array){
+   const arrayAlfabetico = [].concat(array)
+   arrayAlfabetico.sort((a,b)=>{
+
+     if (a.nombre > b.nombre) {
+       return 1
+     }
+     if (a.nombre < b.nombre) {
+       return -1
+     }
+     return 0;
+   })
+   mostrarCatalogoForEach(arrayAlfabetico)
+
+}
+
+function ordenar(array){
+   let opcion = parseInt(prompt(`
+   1 - Ordenar de menor a mayor
+   2 - Ordenar de mayor a menor
+   3 - Ordenar alfabeticamente`))
+   switch(opcion){
        case 1:
-          agregarProducto()
+           ordenarMenorMayor(array)
        break
        case 2:
-          let asegurarse = prompt("ATENCION: ESTO BORRARA TODO PROGRESO DE LA CONSOLA, POR ENDE TENDRA QUE REFRESCAR LA PAGINA PARA SEGUIR USANDO LA APP. Desea continuar? De lo contrario precione ESC")
-          while (asegurarse.toUpperCase() != "ESC")
-          console.clear()
+           ordenarMayorMenor(array)
        break
        case 3:
-         console.log(`
-         1 Chocotorta $1800
-         2 LemonPie $1500
-         3 Tarte de frutilla $2000
-         4 Budines $1200
-         5 Chessecake $2100
-         6 Alfajores $1100
-         7 Marquise $2200
-         8 Rogel $2400
-         9 Selva Negra $2800`)
+           ordenarAlfabeticamenteNombre(array)
        break
-       case 4:
-         const chocotorta = 1800
-         const lemonpie = 1500
-         const tartaDeFrutilla = 2000
-         const budines = 1200
-         const chessecake = 2100
-         const alfajores = 300
-         const marquise = 2200
-         const rogel = 2400
-         const selvaNegra = 2800
-         let total
-         let carrito = prompt(`Elija los productos que desee agragar a su compra, en base al catalogo de la opción N° 3 (Solamente ingrese el/los números de los productos que deseé comprar y separelos con una coma y un espacio) ATENCION: ESCRIBA LOS NUMEROS EN ORDEN DEL 1 AL 9. Si no desea continuar escriba "ESC".`)
-         switch(carrito){
-            case carrito = "1, 2, 3, 4, 5, 6, 7, 8, 9": total = chocotorta + lemonpie + tartaDeFrutilla + budines + chessecake + alfajores + marquise + rogel + selvaNegra
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1, 2, 3, 4, 5, 6, 7, 8": total = chocotorta + lemonpie + tartaDeFrutilla + budines + chessecake + alfajores + marquise + rogel
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1, 2, 3, 4, 5, 6, 7": total = chocotorta + lemonpie + tartaDeFrutilla + budines + chessecake + alfajores + marquise
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1, 2, 3, 4, 5, 6": total = chocotorta + lemonpie + tartaDeFrutilla + budines + chessecake + alfajores
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1, 2, 3, 4, 5": total = chocotorta + lemonpie + tartaDeFrutilla + budines + chessecake
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1, 2, 3, 4": total = chocotorta + lemonpie + tartaDeFrutilla + budines
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1, 2, 3": total = chocotorta + lemonpie + tartaDeFrutilla
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1, 2": total = chocotorta + lemonpie
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "1": total = chocotorta
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "2": total = lemonpie
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "3": total = tartaDeFrutilla
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "4": total = budines
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "5": total = chessecake
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "6": total = alfajores
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "7": total = marquise
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "8": total = rogel
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-            case carrito = "9": total = selvaNegra
-            console.log(`La suma total de su carrito es ${total}`)
-            break
-         }while(carrito.toUpperCase() != "ESC")
-       break         
-       case 0:
-          console.log(`Gracias por utilizar nuestra app. Saludos!`)
-          salirMenu = true
-       break   
        default:
-          console.log("Opción no válida, ingrese alguna presente en el menu")
+           console.log(`${opcion} no es válida para ordenar`)
        break
-    }
- }while(!salirMenu)
+   }
+}
+
+function menu(){
+   let salirMenu = false
+   do{
+       salirMenu = preguntarOpcion(salirMenu)
+   }while(!salirMenu)
+} 
+
+function preguntarOpcion(salir){
+   let opcionIngresada = parseInt(prompt(`Ingrese la opción deseada
+          1 - Agregar producto
+          2 - Borrar producto
+          3 - Consultar catálogo
+          4 - Encontrar por Nombre
+          5 - Buscar productos de un mismo tipo:
+          6 - Ordenar productos
+          0 - Salir del menu`))
+   
+       switch(opcionIngresada){
+           case 1:
+               agregarPostre()
+           break
+           case 2:
+               eliminarProducto(mostrador)
+           break
+           case 3:
+               mostrarCatalogoForEach(mostrador)
+           break
+           case 4:
+               buscarPorNombre(mostrador)
+           break
+           case 5:
+               buscarPorTipo(mostrador)
+           break
+           case 6:
+               ordenar(mostrador)
+           break
+           case 0:
+               console.log("gracias por utilizar nuestra app")
+               salir = true
+               return salir
+           break
+           default:
+               console.log("Ingrese una opción correcta")
+           break
+       }
+}
+
+menu()
