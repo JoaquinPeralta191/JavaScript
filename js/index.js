@@ -65,7 +65,7 @@ function cargarProductosCarrito(array){
     })
 }
 
-function buscarInfo(buscado, array){
+function buscar(buscado, array){
     let busquedaArray = array.filter(
         (producto)=> producto.nombre.toLowerCase().includes(buscado)
     )
@@ -77,7 +77,7 @@ function buscarInfo(buscado, array){
 //eventos
 
 busqueda.addEventListener("input", () => {
-    buscarInfo(busqueda.value.toLowerCase(), mostrador)
+    buscar(busqueda.value.toLowerCase(), mostrador)
 })
 
 mostrarCatalogo(mostrador)
