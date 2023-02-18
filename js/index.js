@@ -7,7 +7,7 @@ let botonCarrito = document.getElementById("botonCarrito")
 let coincidencia = document.getElementById("coincidencia")
 let botonEliminar = document.getElementById("botonEliminar")
 let precioTotal = document.getElementById("precioTotal")
-let precioParcial= document.getElementById("precioParcial")
+let botonFinalizarCompra = document.getElementById("botonFinalizarCompra")
 //funciones
 
 function agregarAlCarrito(producto){
@@ -15,9 +15,7 @@ function agregarAlCarrito(producto){
     let productoAgregado = productosEnCarrito.find((elem) => elem.id == producto.id)
  
     if(productoAgregado == undefined){
-     console.log(`El producto ${producto.nombre} ha sido agregado al carrito. Vale ${producto.precio}`)
     productosEnCarrito.push(producto)
-    console.log(productosEnCarrito)
     localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
     Toastify({
      text: `Se ha agregado al carrito`,
@@ -32,7 +30,7 @@ function agregarAlCarrito(producto){
     }else{
         Swal.fire({
             icon: 'error',
-            title: 'Oops...',
+            title: 'Epaa...',
             text: 'Este producto ya se encuentra en el carrito',
           })
        }
@@ -129,4 +127,40 @@ mostrarCatalogo(mostrador)
 
 botonCarrito.addEventListener("click", () => {
     cargarProductosCarrito(productosEnCarrito)
+})
+
+botonFinalizarCompra.addEventListener("click", () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: '¿Estas seguro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Realizar compra',
+        padding: 40,
+        cancelButtonText: 'Cancelar compra',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire(
+            'Vendido!',
+            'Compra realizada exitosamente',
+            'success'
+          )
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'Deberias reconsiderar hacer una compra ;)',
+            'error'
+          )
+        }
+      })
 })
