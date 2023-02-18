@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nombre": "Chessecake",
+        "precio": 1900
+    },
+    {
+        "id": 2,
+        "nombre": "Chocotorta",
+        "precio": 2100
+    },
+    {
+        "id": 3,
+        "nombre": "Tarta de frutilla",
+        "precio": 1200
+    },
+    {
+        "id": 4,
+        "nombre": "Alfajores",
+        "precio": 2000
+    },
+    {
+        "id": 5,
+        "nombre": "Tarta de limon",
+        "precio": 1600
+    },
+    {
+        "id": 6,
+        "nombre": "Huevo de chocolate relleno",
+        "precio": 1400
+    }  
+]

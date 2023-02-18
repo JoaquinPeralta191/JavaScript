@@ -8,6 +8,9 @@ let coincidencia = document.getElementById("coincidencia")
 let botonEliminar = document.getElementById("botonEliminar")
 let precioTotal = document.getElementById("precioTotal")
 let botonFinalizarCompra = document.getElementById("botonFinalizarCompra")
+let loaderTexto = document.getElementById("loaderTexto")
+let loader = document.getElementById("loader")
+
 //funciones
 
 function agregarAlCarrito(producto){
@@ -103,12 +106,12 @@ function calcularTotal(array){
         total == 0 ? precioTotal.innerHTML = `No hay productos en el carrito` : precioTotal.innerHTML = `Total a pagar: ${total+total*0.20} `
 } 
 
-function buscarInfo(buscado, array){
+function buscar(buscado, array){
     let busquedaArray = array.filter(
         (producto)=> producto.nombre.toLowerCase().includes(buscado)
     )
     busquedaArray.length == 0 ?
-    (coincidencia.innerHTML = `<h3>No hay coincidencias con su búsqueda</h3>`, mostrarCatalogo(busquedaArray)) 
+    (coincidencia.innerHTML == `<h3>No hay coincidencias con su búsqueda</h3>`, mostrarCatalogo(busquedaArray)) 
     :
     (coincidencia.innerHTML = "", mostrarCatalogo(busquedaArray))
 }
@@ -122,7 +125,11 @@ busqueda.addEventListener("input", () => {
     buscar(busqueda.value.toLowerCase(), mostrador)
 })
 
-mostrarCatalogo(mostrador)
+setTimeout(()=>{
+  loaderTexto.innerHTML = ""
+  loader.remove()
+  mostrarCatalogo(mostrador)
+}, 3000)
 
 
 botonCarrito.addEventListener("click", () => {

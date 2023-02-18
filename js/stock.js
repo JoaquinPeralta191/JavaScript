@@ -4,11 +4,7 @@ class Producto {
         this.nombre = nombre,
         this.precio = precio
     }
-    //métodos
-    mostrarInfoLibro(){
-        console.log(`El articulo es ${this.nombre} y su precio es ${this.precio}`)
-    }
- }
+}
  
  const producto1 = new Producto(1,"Chesecake", 1900)
  
@@ -22,5 +18,27 @@ class Producto {
  
  const producto6 = new Producto(6, "Huevo de chocolate relleno", 1400)
  
- const mostrador = [producto1, producto2, producto3, producto4, producto5, producto6]
 
+let mostrador = []
+
+const cargarMostrador = async () => {
+    const response = await fetch("../stock.json")
+    const data = await response.json()
+    
+    for(let producto of data){
+        let productoNuevo = new Producto(producto.id, producto.nombre, producto.precio,)
+        mostrador.push(productoNuevo)
+    }
+    
+    localStorage.setItem("mostrador", JSON.stringify(mostrador))
+}
+
+if(localStorage.getItem("mostrador")){
+
+    for(let libro of JSON.parse(localStorage.getItem("estanteria"))){
+        let libroNuevo = new Libro(libro.id, libro.autor, libro.titulo, libro.precio, libro.imagen)
+        estanteria.push(libroNuevo)
+    }
+}else{
+    cargarMostrador()  
+}
