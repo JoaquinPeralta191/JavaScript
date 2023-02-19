@@ -1,5 +1,5 @@
 //variables
-let busqueda = document.getElementById("buscador");
+let busqueda = document.getElementById("buscador")
 let productosEnCarrito = []
 let sectionProductos = document.getElementById("productos")
 let modalBodyCarrito = document.getElementById("modal-bodyCarrito")
@@ -36,7 +36,7 @@ function agregarAlCarrito(producto){
             title: 'Epaa...',
             text: 'Este producto ya se encuentra en el carrito',
           })
-       }
+  }
  }
 
 function mostrarCatalogo(array){
@@ -103,7 +103,10 @@ function cargarProductosCarrito(array){
 
 function calcularTotal(array){
     let total = array.reduce((acc, productoCarrito) => acc + productoCarrito.precio, 0)
-        total == 0 ? precioTotal.innerHTML = `No hay productos en el carrito` : precioTotal.innerHTML = `Total a pagar: ${total+total*0.20} `
+        total == 0 ? precioTotal.innerHTML = `No hay productos en el carrito` : precioTotal.innerHTML = `
+        Subtotal: ${total}
+        + 20% ||
+        Total a pagar : ${total+total*0.20} `
 } 
 
 function buscar(buscado, array){
@@ -116,13 +119,14 @@ function buscar(buscado, array){
     (coincidencia.innerHTML = "", mostrarCatalogo(busquedaArray))
 }
 
-function eliminarDeCarrito(){
-    `botonEliminar${productoEnCarrito.id}`.innerHTML = ""
-}
 //eventos
 
 busqueda.addEventListener("input", () => {
     buscar(busqueda.value.toLowerCase(), mostrador)
+})
+
+botonCarrito.addEventListener("click", () => {
+    cargarProductosCarrito(productosEnCarrito)
 })
 
 setTimeout(()=>{
@@ -131,13 +135,12 @@ setTimeout(()=>{
   mostrarCatalogo(mostrador)
 }, 3000)
 
-
-botonCarrito.addEventListener("click", () => {
-    cargarProductosCarrito(productosEnCarrito)
-})
-
 botonFinalizarCompra.addEventListener("click", () => {
-    const swalWithBootstrapButtons = Swal.mixin({
+      
+  if(productosEnCarrito.length = 0){
+    
+    }else{
+      const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
           cancelButton: 'btn btn-danger'
@@ -149,16 +152,16 @@ botonFinalizarCompra.addEventListener("click", () => {
         title: '¿Estas seguro?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Realizar compra',
-        padding: 40,
-        cancelButtonText: 'Cancelar compra',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
+          productosEnCarrito.splice(0, productosEnCarrito.length)
           swalWithBootstrapButtons.fire(
             'Vendido!',
             'Compra realizada exitosamente',
-            'success'
+            'success',
           )
         } else if (
           result.dismiss === Swal.DismissReason.cancel
@@ -170,4 +173,4 @@ botonFinalizarCompra.addEventListener("click", () => {
           )
         }
       })
-})
+  }})
