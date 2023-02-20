@@ -107,6 +107,7 @@ function calcularTotal(array){
         Subtotal: ${total}
         + 20% ||
         Total a pagar : ${total+total*0.20} `
+        return total
 } 
 
 function buscar(buscado, array){
@@ -119,6 +120,46 @@ function buscar(buscado, array){
     (coincidencia.innerHTML = "", mostrarCatalogo(busquedaArray))
 }
 
+function finalizarCompra(array){
+  if(array.length == 0){
+    Swal.fire({
+      icon: 'error',
+      title: 'Epaa...',
+      text: 'No hay productos que adquirir. Agregá algún producto',
+    })
+    }else{
+      Swal.fire({
+        title: '¿Estas seguro?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: 'green',
+        cancelButtonColor: 'red',
+    }).then((result)=>{
+        if(result.isConfirmed){  
+          let precioFinal = calcularTotal(array)
+          Swal.fire({
+                title: 'Vendido',
+                icon: 'success',
+                confirmButtonColor: 'green',
+                text: `Compra con valor de: $${precioFinal + precioFinal*0.20}. Realizada exitosamente`,
+                })
+                productosEnCarrito = []
+                localStorage.removeItem("carrito")
+        }else{
+            Swal.fire({
+                title: 'Cancelado',
+                icon: 'info',
+                text: `Tus productos siguen en el carritos. Sugerencia: compralos ;)`,
+                confirmButtonColor: 'green',
+                timer:3500
+            })
+        }
+    }
+
+    )
+}}
 //eventos
 
 busqueda.addEventListener("input", () => {
@@ -136,41 +177,5 @@ setTimeout(()=>{
 }, 3000)
 
 botonFinalizarCompra.addEventListener("click", () => {
-      
-  if(productosEnCarrito.length = 0){
-    
-    }else{
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      })
-      
-      swalWithBootstrapButtons.fire({
-        title: '¿Estas seguro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          productosEnCarrito.splice(0, productosEnCarrito.length)
-          swalWithBootstrapButtons.fire(
-            'Vendido!',
-            'Compra realizada exitosamente',
-            'success',
-          )
-        } else if (
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire(
-            'Cancelado',
-            'Deberias reconsiderar hacer una compra ;)',
-            'error'
-          )
-        }
-      })
-  }})
+      finalizarCompra(productosEnCarrito)
+})
