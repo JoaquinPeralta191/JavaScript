@@ -33,7 +33,7 @@
                       </li>
                       <ul style="list-style: none;"className="navbar-nav me-auto">  
                         <li className="nav-item " >
-                            <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#idModalCarrito" class="btn btn-secondary"><i class="fas fa-shopping-cart fa-1x"></i></a>
+                            <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#inputs" class="btn btn-secondary"><i class="fas fa-shopping-cart fa-1x"></i></a>
                         </li>
                     </ul>
                   </div>
@@ -74,8 +74,44 @@
               <p id="precioTotal"></p>
             </div>
             <div id = "botonera" class="modal-footer">
-              <button type="button" data-bs-dismiss="modal" class="btn btn-success" id="botonFinalizarCompra">Finalizar Compra</button>
+              <button  type="submit button" data-bs-toggle="modal" class="btn btn-success" data-bs-dismiss="modal" id="botonFinalizarCompra">Finalizar Compra</button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="inputs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Introduce tus datos</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-bodyCarrito">
+              <form action="">
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Nombre del Titular</label>
+                  <input type="text" class="form-control" id="input1" aria-describedby="emailHelp" required>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Numero de Tarjeta</label>
+                  <input type="number" class="form-control" id="input2" aria-describedby="emailHelp" required pattern="[0-9]{16}">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Fecha de Expiracion</label>
+                  <input type="number" class="form-control" id="input3" aria-describedby="emailHelp" required  pattern="[0-9]{4}">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Codigo de seguridad</label>
+                  <input type="number" class="form-control" id="input4" aria-describedby="emailHelp" required pattern="[0-9]{3}">
+                </div>
+                <button type="reset" class="btn btn-primary" id="guardarDatos">Guardar informacion de Tarjeta</button>  
+                <button type="button" data-bs-toggle="modal" class="btn btn-success" data-bs-target="#idModalCarrito" data-bs-dismiss="modal">Finalizar Compra</button>
+              </form>
+            </div>
+            <div class="row ml-ato">
+              <p id="precioTotal"></p>
+            </div>
+            
           </div>
         </div>
       </div>

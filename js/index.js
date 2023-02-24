@@ -10,8 +10,44 @@ let precioTotal = document.getElementById("precioTotal")
 let botonFinalizarCompra = document.getElementById("botonFinalizarCompra")
 let loaderTexto = document.getElementById("loaderTexto")
 let loader = document.getElementById("loader")
+let guardarDatos = document.getElementById("guardarDatos")
+let valorInput1 = document.getElementById("input1")
+let valorInput2 = document.getElementById("input2")
+let valorInput3 = document.getElementById("input3")
+let valorInput4 = document.getElementById("input4")
+let datosDeTarjetas = []
+
 
 //funciones
+
+function guardarDatosTarjetas(){
+    let tarjeta = {
+        Dueño: valorInput1.value,
+        Numero: valorInput2.value,
+        Vencimiento: valorInput3.value,
+        CodigoDeSeguridad : valorInput4.value,
+    }
+    if(valorInput4.value == ""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Epaa...',
+            text: 'No se puede cargar, debido a que no se ingresaron los datos',
+          })
+    }else{
+        datosDeTarjetas.push(tarjeta)
+    localStorage.setItem("Tarjetas Guardadas", JSON.stringify(datosDeTarjetas))
+    Toastify({
+        text: `Sus datos fueron guardados`,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        style: {
+            background: "#7e066c",
+            color: "white",
+        }
+}).showToast()
+    }
+}
 
 function agregarAlCarrito(producto){
 
@@ -72,6 +108,7 @@ if(localStorage.getItem("carrito")){
 }
 
 function cargarProductosCarrito(array){
+
     modalBodyCarrito.innerHTML = ""
     array.forEach((productoEnCarrito)=>{
         modalBodyCarrito.innerHTML +=
@@ -115,52 +152,66 @@ function buscar(buscado, array){
         (producto)=> producto.nombre.toLowerCase().includes(buscado)
     )
     busquedaArray.length == 0 ?
-    (coincidencia.innerHTML == `<h3>No hay coincidencias con su búsqueda</h3>`, mostrarCatalogo(busquedaArray)) 
+    (coincidencia.innerHTML == "No hay coincidencias con su búsqueda", mostrarCatalogo(busquedaArray))
     :
     (coincidencia.innerHTML = "", mostrarCatalogo(busquedaArray))
 }
 
 function finalizarCompra(array){
-  if(array.length == 0){
-    Swal.fire({
-      icon: 'error',
-      title: 'Epaa...',
-      text: 'No hay productos que adquirir. Agregá algún producto',
-    })
+    if(datosDeTarjetas.length == 0){
+        Swal.fire({
+            icon: 'error',
+            title: 'Epaa...',
+            text: 'No puedes realizar la compra debido a que no se proporciono un medio de pago',
+          })
     }else{
-      Swal.fire({
-        title: '¿Estas seguro?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: 'green',
-        cancelButtonColor: 'red',
-    }).then((result)=>{
-        if(result.isConfirmed){  
-          let precioFinal = calcularTotal(array)
-          Swal.fire({
-                title: 'Vendido',
-                icon: 'success',
-                confirmButtonColor: 'green',
-                text: `Compra con valor de: $${precioFinal + precioFinal*0.20}. Realizada exitosamente`,
-                })
-                productosEnCarrito = []
-                localStorage.removeItem("carrito")
-        }else{
+        if(array.length == 0){
             Swal.fire({
-                title: 'Cancelado',
-                icon: 'info',
-                text: `Tus productos siguen en el carritos. Sugerencia: compralos ;)`,
-                confirmButtonColor: 'green',
-                timer:3500
+              icon: 'error',
+              title: 'Epaa...',
+              text: 'No hay productos que adquirir. Agregá algún producto',
             })
+            }else{
+              Swal.fire({
+                title: '¿Estas seguro?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Confirmar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: 'green',
+                cancelButtonColor: 'red',
+            }).then((result)=>{
+                if(result.isConfirmed){  
+                  let precioFinal = calcularTotal(array)
+                  Swal.fire({
+                        title: 'Vendido',
+                        icon: 'success',
+                        confirmButtonColor: 'green',
+                        text: `Compra con valor de: $${precioFinal + precioFinal*0.20}. Realizada exitosamente`,
+                        })
+                        productosEnCarrito = []
+                        localStorage.removeItem("carrito")
+                }else{
+                    Swal.fire({
+                        title: 'Cancelado',
+                        icon: 'info',
+                        text: `Tus productos siguen en el carritos. Sugerencia: compralos ;)`,
+                        confirmButtonColor: 'green',
+                        timer:3500
+                    })
+                }
+            }
+        
+            )
         }
     }
+}
 
-    )
-}}
 //eventos
+
+guardarDatos.addEventListener("click", () => {
+    guardarDatosTarjetas()
+})
 
 busqueda.addEventListener("input", () => {
     buscar(busqueda.value.toLowerCase(), mostrador)
@@ -177,5 +228,5 @@ setTimeout(()=>{
 }, 3000)
 
 botonFinalizarCompra.addEventListener("click", () => {
-      finalizarCompra(productosEnCarrito)
+    finalizarCompra(productosEnCarrito)
 })
